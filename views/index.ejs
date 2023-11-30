@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .button-container {
+            text-align: right;
+            margin-right: 20px; 
+        }
+        .button
+          {  background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer}
+        .delete-button {
+            background-color: #ff0000; /* Choose your delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+   </style>
+
+</head>
+<body>
+    <div class="button-container">
+        <a href="http://localhost/newuser" class="button">Create New User</a>
+    </div>
+    <h1>Student Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fname</th>
+                <th>Lname</th>
+                <th>Age</th>
+                <th>Class</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i < result.length; i++) { %>
+                <tr>
+                    <td><%= result[i]["fname"] %></td>
+                    <td><%= result[i]["lname"] %></td>
+                    <td><%= result[i].Age %></td>
+                    <td><%= result[i].Class %></td>
+                    <td><%= result[i].gender %></td>>
+                    <td> <form action="/delete" method="POST" class="delete-form">
+                        <input type="hidden" name="id" value="<%= result[i].ID %>">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form></td>
+                   
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+
+</html>

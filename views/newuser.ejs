@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.url-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    background-color: #000;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.url-button:hover {
+    background-color: #333;
+}
+
+form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: calc(100% - 20px); /* Adjusting the width */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+select {
+    appearance: none;
+}
+
+#registartionbutton {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    background-color: #000;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+#registartionbutton:hover {
+    background-color: #333;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="http://localhost/" class="url-button">TO localhost</a>
+        <h1>Studenská registrace</h1>
+    </div>
+
+    <form action="/vitek.hoang" method="POST">
+        <label for="fname">Jméno:</label>
+        <input type="text" placeholder="Jméno" id="fname" name="fname" required>
+
+        <label for="lname">Přijmení:</label>
+        <input type="text" placeholder="Příjmení" id="lname" name="lname" required>
+<label for="Age">Věk:</label>
+<input type="number" placeholder="Věk" id="Age" name="Age" min="16" max="26" required>
+
+        <label for="Class">Třída:</label>
+        <select id="Class" name="Class" required>
+            <option value="1.IT">1.IT</option>
+            <option value="2.IT">2.IT</option>
+            <option value="3.IT">3.IT</option>
+            <option value="4.IT">4.IT</option>
+        </select>
+        
+        <label for="gender">Pohlaví:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Muž</option>
+            <option value="female">Žena</option>
+        </select>
+
+        <button id="registartionbutton" type="submit">Přidat žáka</button>
+    </form>
+
+</body>
+</html>
