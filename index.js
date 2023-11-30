@@ -71,3 +71,6 @@ app.post('/delete', (req, res) => {
       res.redirect('/');
   });
 });
+
+app.listen(port)
+

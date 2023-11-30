@@ -82,7 +82,8 @@
                     <td><%= result[i]["lname"] %></td>
                     <td><%= result[i].Age %></td>
                     <td><%= result[i].Class %></td>
-                    <td><%= result[i].gender %></td>>
+                    <td><%= result[i].gender %></td>
+                    
                     <td> <form action="/delete" method="POST" class="delete-form">
                         <input type="hidden" name="id" value="<%= result[i].ID %>">
                         <button type="submit" class="delete-button">Delete</button>
