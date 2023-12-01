@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');//imort bodyParseru
 app.use(bodyParser.urlencoded({ extended: false }));//dekoduje data poslana pres POST
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.json())
+app.use(express.static('public'))
 
 var mysql = require('mysql2');
 
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
         if (err) throw err;
         con.query("SELECT * FROM test_1", function (err, result, fields) {
           if (err) throw err;
-          console.log(result);
+          //console.log(result);
           res.render('index', { result });
         });
       });
@@ -74,3 +76,29 @@ app.post('/delete', (req, res) => {
 
 app.listen(port)
 
+app.post('/update', (req, res) => {
+  const editedId = req.body.id;
+  const editedFname = req.body.fname;
+  const editedLname = req.body.lname;
+  const editedAge = req.body.Age;
+  const editedClass = req.body.Class;
+  const editedGender = req.body.gender;
+
+  const updateQuery = `UPDATE test_1 SET 
+                          fname='${editedFname}',
+                          lname='${editedLname}',
+                          Age='${editedAge}',
+                          Class='${editedClass}',
+                          gender='${editedGender}'
+                      WHERE ID=${editedId}`;
+  
+  con.query(updateQuery, (error, result, fields) => {
+      if (error) {
+          console.error(error);
+          res.status(500).send('Error updating user data');
+          return;
+      }
+
+      res.redirect('/'); // Redirect to the main page after updating
+  });
+});

@@ -59,6 +59,10 @@
         }
    </style>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
 </head>
 <body>
     <div class="button-container">
@@ -73,26 +77,47 @@
                 <th>Age</th>
                 <th>Class</th>
                 <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             <% for(var i = 0; i < result.length; i++) { %>
-                <tr>
-                    <td><%= result[i]["fname"] %></td>
-                    <td><%= result[i]["lname"] %></td>
-                    <td><%= result[i].Age %></td>
-                    <td><%= result[i].Class %></td>
-                    <td><%= result[i].gender %></td>
-                    
-                    <td> <form action="/delete" method="POST" class="delete-form">
-                        <input type="hidden" name="id" value="<%= result[i].ID %>">
-                        <button type="submit" class="delete-button">Delete</button>
-                    </form></td>
-                   
+                <tr id="row<%= result[i].ID %>">
+                    <td><input class="in" id="<%=result[i].ID%>.fname" type="text" value="<%= result[i].fname %>"></td>
+                    <td><input class="in" id="<%=result[i].ID%>.lname" type="text" value="<%= result[i].lname %>"></td>
+                    <td><input class="in" id="<%=result[i].ID%>.Age" type="text" value="<%= result[i].Age %>"></td>
+                    <td><input class="in" id="<%=result[i].ID%>.Class" type="text" value="<%= result[i].Class %>"></td>
+                    <td><input class="in" id="<%=result[i].ID%>.gender" type="text" value="<%= result[i].gender %>"></td>
+                    <td>
+                        <button onclick="editRow(<%= result[i].ID %>)" class="edit-button">save</button>
+                    </td>
+                    <td>
+                        <form action="/delete" method="POST" class="delete-form">
+                            <input type="hidden" name="id" value="<%= result[i].ID %>">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             <% } %>
         </tbody>
     </table>
-</body>
 
-</html>
+    <script>
+        function editRow(id) {
+            const data = {
+                    id: id,
+                    fname: document.getElementById(`${id}.fname`).value,
+                    lname: document.getElementById(`${id}.lname`).value,
+                    Age: document.getElementById(`${id}.Age`).value,
+                    Class: document.getElementById(`${id}.Class`).value,
+                    gender: document.getElementById(`${id}.gender`).value,
+            }
+            fetch('/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            })
+        }
+    </script>
+</body>
