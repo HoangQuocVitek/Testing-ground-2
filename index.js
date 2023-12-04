@@ -88,7 +88,7 @@ app.post('/update', (req, res) => {
                           fname='${editedFname}',
                           lname='${editedLname}',
                           Age='${editedAge}',
-                          Class='${editedClass}',
+                          Class='${editedClass}'
                           gender='${editedGender}'
                       WHERE ID=${editedId}`;
   

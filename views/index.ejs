@@ -57,13 +57,22 @@
             border-radius: 3px;
             cursor: pointer;
         }
+        .hidden {
+            display: none;
+        }¨
+        input#\31 \.fname {
+    width: 150px;
+}
+input#\31 \.lname {
+    width: 150px;
+}
+
    </style>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
 </head>
+
+
+
+<html>
 <body>
     <div class="button-container">
         <a href="http://localhost/newuser" class="button">Create New User</a>
@@ -74,9 +83,9 @@
             <tr>
                 <th>Fname</th>
                 <th>Lname</th>
-                <th>Age</th>
-                <th>Class</th>
-                <th>Gender</th>
+                <th>Věk</th>
+                <th>Třída</th>
+                <th>Pohlaví</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -84,13 +93,37 @@
         <tbody>
             <% for(var i = 0; i < result.length; i++) { %>
                 <tr id="row<%= result[i].ID %>">
-                    <td><input class="in" id="<%=result[i].ID%>.fname" type="text" value="<%= result[i].fname %>"></td>
-                    <td><input class="in" id="<%=result[i].ID%>.lname" type="text" value="<%= result[i].lname %>"></td>
-                    <td><input class="in" id="<%=result[i].ID%>.Age" type="text" value="<%= result[i].Age %>"></td>
-                    <td><input class="in" id="<%=result[i].ID%>.Class" type="text" value="<%= result[i].Class %>"></td>
-                    <td><input class="in" id="<%=result[i].ID%>.gender" type="text" value="<%= result[i].gender %>"></td>
                     <td>
-                        <button onclick="editRow(<%= result[i].ID %>)" class="edit-button">save</button>
+                        <span class="data"><%= result[i].fname %></span>
+                        <input class="in hidden" id="<%=result[i].ID%>.fname" type="text" value="<%= result[i].fname %>">
+                    </td>
+                    <td>
+                        <span class="data"><%= result[i].lname %></span>
+                        <input class="in hidden" id="<%=result[i].ID%>.lname" type="text" value="<%= result[i].lname %>">
+                    </td>
+                    <td>
+                        <span class="data"><%= result[i].Age %></span>
+                        <input class="in hidden" id="<%=result[i].ID%>.Age" type="number" value="<%= result[i].Age %>" min="16" max="26">
+                    </td>
+                    <td>
+                        <span class="data"><%= result[i].Class %></span>
+                        <select class="in hidden" id="<%=result[i].ID%>.Class">
+                            <option value="1.IT" <% if(result[i].Class === '1.IT') { %> selected <% } %>>1.IT</option>
+                            <option value="2.IT" <% if(result[i].Class === '2.IT') { %> selected <% } %>>2.IT</option>
+                            <option value="3.IT" <% if(result[i].Class === '3.IT') { %> selected <% } %>>3.IT</option>
+                            <option value="4.IT" <% if(result[i].Class === '4.IT') { %> selected <% } %>>4.IT</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span class="data"><%= result[i].gender %></span>
+                        <select class="in hidden" id="<%=result[i].ID%>.gender">
+                            <option value="male" <% if(result[i].gender === 'male') { %> selected <% } %>>male</option>
+                            <option value="female" <% if(result[i].gender === 'female') { %> selected <% } %>>female</option>
+                            <option value="helicopter" <% if(result[i].gender === 'helicopter') { %> selected <% } %>>helicopter</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button onclick="toggleEditSave(this, <%= result[i].ID %>)" class="edit-button">Edit</button>
                     </td>
                     <td>
                         <form action="/delete" method="POST" class="delete-form">
@@ -104,20 +137,48 @@
     </table>
 
     <script>
-        function editRow(id) {
-            const data = {
+        function toggleEditSave(button, id) {
+            const row = document.getElementById(`row${id}`);
+            const inputs = row.getElementsByClassName('in');
+            const dataSpans = row.getElementsByClassName('data');
+
+            if (button.textContent === 'Edit') {
+                button.textContent = 'Save';
+                for (let i = 0; i < inputs.length; i++) {
+                    if (inputs[i].classList.contains('hidden')) {
+                        inputs[i].classList.remove('hidden');
+                        dataSpans[i].classList.add('hidden');
+                    } else {
+                        inputs[i].classList.add('hidden');
+                        dataSpans[i].classList.remove('hidden');
+                    }
+                }
+            } else if (button.textContent === 'Save') {
+                button.textContent = 'Edit';
+                for (let i = 0; i < inputs.length; i++) {
+                    if (!inputs[i].classList.contains('hidden')) {
+                        inputs[i].classList.add('hidden');
+                        dataSpans[i].classList.remove('hidden');
+                        dataSpans[i].textContent = inputs[i].value;
+                    }
+                }
+
+                const data = {
                     id: id,
                     fname: document.getElementById(`${id}.fname`).value,
                     lname: document.getElementById(`${id}.lname`).value,
                     Age: document.getElementById(`${id}.Age`).value,
                     Class: document.getElementById(`${id}.Class`).value,
                     gender: document.getElementById(`${id}.gender`).value,
+                }
+
+                fetch('/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
             }
-            fetch('/update', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data),
-            })
         }
     </script>
 </body>
+</html>
