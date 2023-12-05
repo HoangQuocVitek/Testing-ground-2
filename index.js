@@ -85,12 +85,13 @@ app.post('/update', (req, res) => {
   const editedGender = req.body.gender;
 
   const updateQuery = `UPDATE test_1 SET 
-                          fname='${editedFname}',
-                          lname='${editedLname}',
-                          Age='${editedAge}',
-                          Class='${editedClass}'
-                          gender='${editedGender}'
-                      WHERE ID=${editedId}`;
+  fname='${editedFname}',
+  lname='${editedLname}',
+  Age='${editedAge}',
+  Class='${editedClass}',
+  gender='${editedGender}'
+WHERE ID=${editedId}
+`;
   
   con.query(updateQuery, (error, result, fields) => {
       if (error) {
